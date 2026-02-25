@@ -6,6 +6,7 @@ struct SwiftPlayground {
     static func main() {
         let maximumItemVolume = 2.0
         
+        
         print("Enter the room length: ")
         if let userinput = readLine(), let roomLength = Double(userinput){
             print("Enter the room width: ")
