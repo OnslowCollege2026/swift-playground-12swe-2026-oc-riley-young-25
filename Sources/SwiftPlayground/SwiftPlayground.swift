@@ -1,71 +1,57 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
+func print(board: [[String]]) {
+    for line in board {
+        print("\(line[0]) | \(line[1]) | \(line[2])")
+        print("--+---+--")
 
-func menuChoice() -> Int {
-    print("""
-    ==== Egg Shop ====
-    1. Add eggs
-    2. Sell eggs
-    3. Show current stock
-    4. Show total eggs sold
-    5. Exit
-    Choose an option:
-    """)
-
-    let number = Int(readLine()!)!
-    return number
-}
-func addEggs(currentStock: Int, amount: Int) -> Int {
-    return currentStock + amount
+    }
+    print()
 }
 
-func sellEggs(currentStock: Int, amount: Int) -> Int {
-    return currentStock - amount
-}
+func askForPosition(board: [[String]]) -> [Int]
+{
+    while true {
+        print("Please enter the column number 1-3")
+        let userInput = readLine()!
+        let columnNumber = Int(userInput)! - 1
 
-func stockMessage(stock: Int) -> String {
-    return "there is \(stock) eggs in stock 🥚🥚🥚🥚🥚"
-}
+        print("Please enter the row number 1-3")
+        let userInput2 = readLine()!
+        let rowNumber = Int(userInput2)! - 1
 
-func updateSoldCount(currentSold: Int, amount: Int) -> Int {
-    return currentSold + amount
+        if board[rowNumber][columnNumber] == "." {
+            return [rowNumber, columnNumber]
+        }
+    }
 }
-
 
 @main
 struct SwiftPlayground {
     static func main() {
-        var eggsInStock = 0
-        var eggsSold = 0
-        while true{
-            let menuChosen = menuChoice()
+        var player = "O"
 
-            if menuChosen == 1 {
-                print("add egg amount")
-                let input = Int(readLine()!)!
-                eggsInStock = addEggs(currentStock: eggsInStock, amount: input)
+        var board = [
+            [".", ".", "."], // row 0
+            [".", ".", "."], // row 1
+            [".", ".", "."], // row 2
+        ]
+        print(board: board)
+
+        while true {
+            //ask for users position
+            let position = askForPosition(board: board)
+            board[position[0]][position[1]] = player
+
+            if player == "O" {
+                player = "X"
+            } else {
+                player = "O"
             }
 
-            if menuChosen == 2 {
-                print("sell egg amount")
-                let input = Int(readLine()!)!
-                eggsInStock = sellEggs(currentStock: eggsInStock, amount: input)
-                eggsSold = updateSoldCount(currentSold: eggsSold, amount: input)
-            }
-
-            if menuChosen == 3 {
-                print(stockMessage(stock: eggsInStock))
-            }
-
-            if menuChosen == 4 {
-                print("you sold \(eggsSold) total eggs")
-            }
-
-            if menuChosen == 5 {
-                print("ahh poo")
-                break
-            }
+            print(board: board)
         }
     }
+
 }
