@@ -1,42 +1,72 @@
 // The Swift Programming Language
 // https://docs.swift.org/swift-book
 
+
+
+func menuChoice() -> Int {
+    print("""
+    ==== Egg Shop ====
+    1. Add eggs
+    2. Sell eggs
+    3. Show current stock
+    4. Show total eggs sold
+    5. Exit
+    Choose an option:
+    """)
+
+    let number = Int(readLine()!)!
+    return number
+}
+func addEggs(currentStock: Int, amount: Int) -> Int {
+    return currentStock + amount
+}
+
+func sellEggs(currentStock: Int, amount: Int) -> Int {
+    return currentStock - amount
+}
+
+func stockMessage(stock: Int) -> String {
+    return "there is \(stock) eggs in stock 🥚🥚🥚🥚🥚"
+}
+
+func updateSoldCount(currentSold: Int, amount: Int) -> Int {
+    return currentSold + amount
+}
+
+
 @main
 struct SwiftPlayground {
     static func main() {
-        let maximumItemVolume = 2.0
-        
-        print("Enter the room length: ")
-        if let userinput = readLine(), let roomLength = Double(userinput){
-            print("Enter the room width: ")
-            if let userinput = readLine(), let roomWidth = Double(userinput){
-                print("Enter the room height: ")
-                if let userinput = readLine(), let roomHeight = Double(userinput){
-                    let roomArea = roomLength * roomWidth
-                    let roomVolume = roomArea * roomHeight
+        var eggsInStock = 0
+        var eggsSold = 0
+        while true{
+            let menuChosen = menuChoice()
 
-                    print("room area:", roomArea)
-                    print("room volume:", roomVolume)
-
-                    let furnitureVolume = [1.2, 0.8, 2.5, 0.6, 1.0]
-
-                    var totalFurnitureVolume = 0.0
-
-                    furnitureVolume.enumerated().forEach {index, volume in
-                        print("item \(index + 1): \(volume) m3")
-                        if volume > maximumItemVolume {
-                            print("oversize item")
-                        }
-                        totalFurnitureVolume += volume
-                    }
-                let usableVolume = roomVolume - totalFurnitureVolume
-                print("usable vlume: \(usableVolume) m3")
-                }
-
+            if menuChosen == 1 {
+                print("add egg amount")
+                let input = Int(readLine()!)!
+                eggsInStock = addEggs(currentStock: eggsInStock, amount: input)
             }
 
+            if menuChosen == 2 {
+                print("sell egg amount")
+                let input = Int(readLine()!)!
+                eggsInStock = sellEggs(currentStock: eggsInStock, amount: input)
+                eggsSold = updateSoldCount(currentSold: eggsSold, amount: input)
+            }
+
+            if menuChosen == 3 {
+                print(stockMessage(stock: eggsInStock))
+            }
+
+            if menuChosen == 4 {
+                print("you sold \(eggsSold) total eggs")
+            }
+
+            if menuChosen == 5 {
+                print("ahh poo")
+                break
+            }
         }
-
     }
-
 }
