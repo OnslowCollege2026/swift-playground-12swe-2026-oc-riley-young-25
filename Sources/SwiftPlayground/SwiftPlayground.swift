@@ -13,10 +13,21 @@ func menuChoice() -> Int {
     5. Exit
     Choose an option:
     """)
-
-    let number = Int(readLine()!)!
-    return number
+    while true {
+        if let input = readLine() {
+            if let number = Int(input), number > 0, number <= 5 {
+                return number
+            } else {
+                print("Please enter valid number 1-5")
+            }
+        } else {
+            print("Please enter valid number 1-5")
+        }
+    }
+    
+    
 }
+
 func addEggs(currentStock: Int, amount: Int) -> Int {
     return currentStock + amount
 }
@@ -26,8 +37,8 @@ func sellEggs(currentStock: Int, amount: Int) -> Int {
 }
 
 func stockMessage(stock: Int) -> String {
-    return "there is \(stock) eggs in stock 🥚🥚🥚🥚🥚"
-}
+    return "There is \(stock) eggs in stock 🥚"
+} 
 
 func updateSoldCount(currentSold: Int, amount: Int) -> Int {
     return currentSold + amount
@@ -43,16 +54,31 @@ struct SwiftPlayground {
             let menuChosen = menuChoice()
 
             if menuChosen == 1 {
-                print("add egg amount")
-                let input = Int(readLine()!)!
-                eggsInStock = addEggs(currentStock: eggsInStock, amount: input)
+                print("Add egg amount🥚")
+                if let input = readLine() {
+                    if let number = Int(input), number > 0 {
+                        eggsInStock = addEggs(currentStock: eggsInStock, amount: number)
+                    } else {
+                        print("Please enter a valid number🥚")
+                    }
+                } else {
+                    print("Please enter a valid number🥚")
+                }
             }
 
             if menuChosen == 2 {
-                print("sell egg amount")
-                let input = Int(readLine()!)!
-                eggsInStock = sellEggs(currentStock: eggsInStock, amount: input)
-                eggsSold = updateSoldCount(currentSold: eggsSold, amount: input)
+                print("Sell egg amount🥚")
+                if let input = readLine() {
+                    if let number = Int(input), number > 0 {
+                        eggsInStock = sellEggs(currentStock: eggsInStock, amount: number)
+                        eggsSold = updateSoldCount(currentSold: eggsSold, amount: number)
+                    } else {
+                        print("Please enter a valid number🥚")
+                    }
+                } else {
+                    print("Please enter a valid number🥚")
+                }
+
             }
 
             if menuChosen == 3 {
@@ -60,11 +86,11 @@ struct SwiftPlayground {
             }
 
             if menuChosen == 4 {
-                print("you sold \(eggsSold) total eggs")
+                print("You sold \(eggsSold) total eggs🥚")
             }
 
             if menuChosen == 5 {
-                print("ahh poo")
+                print("Thank you for using the egg shop🥚")
                 break
             }
         }
