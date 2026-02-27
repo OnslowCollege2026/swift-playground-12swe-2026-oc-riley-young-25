@@ -29,10 +29,18 @@ func menuChoice() -> Int {
 }
 
 func addEggs(currentStock: Int, amount: Int) -> Int {
+    if currentStock + amount > 1000 {
+        print("Stock cannot exceed 1000 eggs. Try again with less eggs.")
+        return currentStock
+    }
     return currentStock + amount
 }
 
 func sellEggs(currentStock: Int, amount: Int) -> Int {
+    if currentStock - amount < 0 {
+        print("Not enough eggs to sell. Try again with less eggs.")
+        return currentStock
+    }
     return currentStock - amount
 }
 
@@ -67,17 +75,26 @@ struct SwiftPlayground {
             }
 
             if menuChosen == 2 {
-                print("Sell egg amount🥚")
-                if let input = readLine() {
-                    if let number = Int(input), number > 0 {
-                        eggsInStock = sellEggs(currentStock: eggsInStock, amount: number)
-                        eggsSold = updateSoldCount(currentSold: eggsSold, amount: number)
+                if eggsInStock > 0 {
+                        print("Sell egg amount🥚")
+                    if let input = readLine() {
+                        if let number = Int(input), number > 0 {
+                            if eggsInStock - number >= 0 {
+                                eggsInStock = sellEggs(currentStock: eggsInStock, amount: number)
+                                eggsSold = updateSoldCount(currentSold: eggsSold, amount: number)
+                            } else {
+                                print("Not enough eggs in stock.")
+                            }
+                        } else {
+                            print("Please enter a valid number🥚")
+                        }
                     } else {
                         print("Please enter a valid number🥚")
                     }
                 } else {
-                    print("Please enter a valid number🥚")
+                    print("No eggs to sell.")
                 }
+                
 
             }
 
