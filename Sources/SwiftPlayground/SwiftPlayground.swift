@@ -3,113 +3,55 @@
 
 
 
-func menuChoice() -> Int {
-    print("""
-    ==== Egg Shop ====
-    1. Add eggs
-    2. Sell eggs
-    3. Show current stock
-    4. Show total eggs sold
-    5. Exit
-    Choose an option:
-    """)
-    while true {
-        if let input = readLine() {
-            if let number = Int(input), number > 0, number <= 5 {
-                return number
-            } else {
-                print("Please enter valid number 1-5")
-            }
-        } else {
-            print("Please enter valid number 1-5")
-        }
-    }
-    
-    
-}
 
-func addEggs(currentStock: Int, amount: Int) -> Int {
-    if currentStock + amount > 1000 {
-        print("Stock cannot exceed 1000 eggs. Try again with less eggs.")
-        return currentStock
-    }
-    return currentStock + amount
-}
-
-func sellEggs(currentStock: Int, amount: Int) -> Int {
-    if currentStock - amount < 0 {
-        print("Not enough eggs to sell. Try again with less eggs.")
-        return currentStock
-    }
-    return currentStock - amount
-}
-
-func stockMessage(stock: Int) -> String {
-    return "There is \(stock) eggs in stock 🥚"
-} 
-
-func updateSoldCount(currentSold: Int, amount: Int) -> Int {
-    return currentSold + amount
-}
+// The Swift Programming Language
+// https://docs.swift.org/swift-book
 
 
+
+import Foundation
 @main
 struct SwiftPlayground {
     static func main() {
-        var eggsInStock = 0
-        var eggsSold = 0
-        while true{
-            let menuChosen = menuChoice()
+        //constants and variable
+        let vocabulary: [[String]] = [
+            ["Hello", "hola", "gracias",  "lo siento", "bonjour"],
+            ["thanks", "gracias", "bueno", "tambien", "cinco"],
+            ["Please", "por favor", "adios", "pollo", "siete"],
+            ["sorry", "lo siento","si", "y tu", "ocho"],
+            ["goodbye", "adios", "abrigo", "hola", "amigo"]
+        ]
+        var score = 0
+        var incorrectAnswerIndices: [Int] = []
+        var counter = 0
 
-            if menuChosen == 1 {
-                print("Add egg amount🥚")
-                if let input = readLine() {
-                    if let number = Int(input), number > 0 {
-                        eggsInStock = addEggs(currentStock: eggsInStock, amount: number)
-                    } else {
-                        print("Please enter a valid number🥚")
-                    }
-                } else {
-                    print("Please enter a valid number🥚")
-                }
+
+        while counter < vocabulary.count {
+
+
+            //show the question
+            print("find the translation of \(englishWord)")
+
+            //create an array of options
+            allAnswers.forEach { answer in 
+                print("- \(answer)")
             }
 
-            if menuChosen == 2 {
-                if eggsInStock > 0 {
-                        print("Sell egg amount🥚")
-                    if let input = readLine() {
-                        if let number = Int(input), number > 0 {
-                            if eggsInStock - number >= 0 {
-                                eggsInStock = sellEggs(currentStock: eggsInStock, amount: number)
-                                eggsSold = updateSoldCount(currentSold: eggsSold, amount: number)
-                            } else {
-                                print("Not enough eggs in stock.")
-                            }
-                        } else {
-                            print("Please enter a valid number🥚")
-                        }
-                    } else {
-                        print("Please enter a valid number🥚")
-                    }
-                } else {
-                    print("No eggs to sell.")
-                }
-                
-
+            if let userInput = readLine(), userInput.lowercased() == correctWord.lowercased() {
+                score = score + 1
+                print("Yes, \(correctWord) is correct")
+            } else {
+                incorrectAnswerIndices.append(counter)
+                print("Sorry! The correct answer is \(correctWord).")
             }
 
-            if menuChosen == 3 {
-                print(stockMessage(stock: eggsInStock))
-            }
-
-            if menuChosen == 4 {
-                print("You sold \(eggsSold) total eggs🥚")
-            }
-
-            if menuChosen == 5 {
-                print("Thank you for using the egg shop🥚")
-                break
-            }
+            counter += 1
         }
+    
+    while incorrectAnswerIndices.count > 0 {
+        let index = incorrectAnswerIndices[0]
+
+    }
+
     }
 }
